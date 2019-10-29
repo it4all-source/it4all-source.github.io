@@ -1,23 +1,28 @@
-# mod_rewrite starts here
-RewriteEngine on
 
-# does not apply to existing directories, meaning that if the folder exists on the server then don't change anything and don't run the Rule!
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# Check for file in directory with .html extension
-RewriteCond %{REQUEST_FILENAME}\.html -f
-
-
-# Here we actually show the page that has the .hmtl extension
-RewriteRule ^(.*)$ $1.html [NC,L]
 
 
 ErrorDocument 404 /404.html
 
 
 
-# remove php file extension-e.g. https://example.com/file.php will become https://example.com/file
+# remove html file extension
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [NC,L]
+
+
+
+# remove php file extension
 RewriteEngine on 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php [NC,L]
+
+
+
+# remove jsp file extension 
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.jsp -f
+RewriteRule (.+)/$ $1.jsp [NC,L]
